@@ -23,12 +23,20 @@ module.exports = {
   module: {
     rules: [
       {
+        test: /\.html$/,
+        loader: "html-loader",
+      },
+      {
         test: /\.(png|jpe?g|gif|svg)$/i,
         type: "asset",
       },
       {
         test: /\.(s[ac]|c)ss$/i,
         use: [
+          // {
+          //   loader: MiniCssExtractPlugin.loader,
+          //   options: { publicPath: "" },
+          // },
           MiniCssExtractPlugin.loader,
           "css-loader",
           "postcss-loader",
@@ -47,7 +55,11 @@ module.exports = {
 
   plugins: [
     new CleanWebpackPlugin(),
-    new MiniCssExtractPlugin(),
+    new MiniCssExtractPlugin({
+      attributes: {
+        src: target,
+      },
+    }),
     new HtmlWebpackPlugin({
       template: "./src/index.html",
     }),
